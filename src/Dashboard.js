@@ -8,8 +8,10 @@ import {
   TableCell,
   TableBody,
 } from "@material-ui/core";
+import { useAuth0 } from "./contexts/auth0-context";
 
 const Dashboard = () => {
+  const { user } = useAuth0();
   return (
     <div>
       <Container>
@@ -23,8 +25,8 @@ const Dashboard = () => {
             </TableHead>
             <TableBody>
             <TableRow>
-                <TableCell align="right">Key</TableCell>
-                <TableCell align="right">Value</TableCell>
+                <TableCell align="right">{user.name}</TableCell>
+                <TableCell align="right">{JSON.stringify(user)}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

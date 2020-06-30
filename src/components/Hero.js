@@ -1,7 +1,5 @@
 import React from "react";
 
-import logo from "../assets/logo.svg";
-
 const Hero = () => (
   <div className="text-center hero my-5">
     <img className="mb-3 app-logo" src="https://www.acmutd.co/brand/Development/Logos/light_dark_background.png" alt="React logo" width="120" />

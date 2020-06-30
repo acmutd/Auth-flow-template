@@ -3,7 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 
 import Highlight from "../components/Highlight";
 import Loading from "../components/Loading";
-import { useAuth0 } from "../react-auth0-spa";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Profile = () => {
   const { loading, user } = useAuth0();

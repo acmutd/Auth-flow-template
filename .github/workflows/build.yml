@@ -3,8 +3,9 @@
 
 name: Build
 env:
-    REACT_APP_DOMAIN: ${{ secrets.REACT_APP_DOMAIN }}
-    REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+    REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN }}
+    REACT_APP_AUTH0_CLIENTID: ${{ secrets.REACT_APP_AUTH0_CLIENTID }}
+    REACT_APP_AUTH0_AUDIENCE: ${{ secrets.REACT_APP_AUTH0_AUDIENCE }}
 
 on:
   push:

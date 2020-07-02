@@ -1,10 +1,11 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Node.js CI
+name: Build
 env:
-    REACT_APP_DOMAIN: ${{ secrets.REACT_APP_DOMAIN }}
-    REACT_APP_CLIENT_ID: ${{ secrets.REACT_APP_CLIENT_ID }}
+    REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN }}
+    REACT_APP_AUTH0_CLIENTID: ${{ secrets.REACT_APP_AUTH0_CLIENTID }}
+    REACT_APP_AUTH0_AUDIENCE: ${{ secrets.REACT_APP_AUTH0_AUDIENCE }}
 
 on:
   push:

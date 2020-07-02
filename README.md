@@ -1,88 +1,85 @@
-# Sample 01 - Logging In and Gated Content
+# ACM Authentication Flow
+![Build](https://github.com/acmutd/dev_web_testing/workflows/Build/badge.svg)
 
-This sample demonstrates:
+Template Repository for use by ACM Development
 
+##### Features
 - Logging in to Auth0 using Redirect Mode
-- Accessing profile information that has been provided in the ID token
-- Gated content. The `/profile` route is not accessible without having first logged in
+- Accessing profile information that has been provided
+- Gated content. The `/profile` and `/external-api` routes are not accessible without having first logged in
+- Authenticating against a 3rd party API and accessing secure cloud functions
+- Guide to implementing Auth0 into your project
 
-## Project setup
+## Quick Start
 
-Use `yarn` or `npm` to install the project dependencies:
-
-```bash
-# Using npm..
-npm install
-
-# Using yarn..
-yarn install
+  - [Create an Auth0 account](auth0.com) if you don't have one already, request ACM Development for access to the acmutd tenant
+  - Install all project dependencies using `npm install`
+  - This template uses the `auth0-react` library. For single page applications that do not use React we recommend going with the `auth0-spa-js` library.
+  - Auth0 requires access to the domain, client id and API audience to work. Create a a `.env` file as follows and request ACM Development for the fields.
+  
+```
+REACT_APP_AUTH0_DOMAIN=<YOUR DOMAIN HERE>
+REACT_APP_AUTH0_CLIENTID=<YOUR CLIENT ID HERE>
+REACT_APP_AUTH0_AUDIENCE=<YOUR AUDIENCE HERE>
 ```
 
-### Configuration
+ - Run `npm start` and navigate to `http://localhost:3000`
 
-The project needs to be configured with your Auth0 domain and client ID in order for the authentication flow to work.
+### Advanced
+Integrating Auth0 into your application
 
-To do this, first copy `src/auth_config.json.example` into a new file in the same folder called `src/auth_config.json`, and replace the values with your own Auth0 application credentials:
+The `auth0-react` library supports many functions for use in your application. With respect to React Applications, the library needs to be used differently within class vs functional components. Below are outlined the steps to integrate Auth0. Note that the steps described below will work for both JavaScript and TypeScript projects. For TypeScript it may be necessary to disable source maps depending on the transpiler being used.
 
-```json
-{
-  "domain": "{YOUR AUTH0 DOMAIN}",
-  "clientId": "{YOUR AUTH0 CLIENT ID}"
-}
+ - `npm install @auth0/auth0-react`
+
+#### Functional Components
+ - `import { useAuth0 } from "@auth0/auth0-react";`
+ - You can access Auth0 context this way within the functional component `const { getAccessTokenSilently } = useAuth0();` 
+
+#### Class Components
+ - `import { withAuth0 } from "@auth0/auth0-react";`
+ - Update the export for your component to be `export default withAuth0(User);`
+ - You can access Auth0 context this way within the class component `const { getAccessTokenSilently, user } = this.props.auth0;`
+ - Auth0 wraps class components with a higher order component and injects the necessary functions and variables as props
+
+#### Final Steps
+
+ - In your `index.js` file make sure to `import { Auth0Provider } from "@auth0/auth0-react";`
+ - Wrap the `<App>` component within the `<Auth0Provider>`. This provides Auth0 with the necessary information to function and makes its features available to all children components through context.
 ```
-
-### Compiles and hot-reloads for development
-
-```bash
-npm run start
+<Auth0Provider
+    domain={config.domain}
+    clientId={config.clientId}
+    redirectUri={window.location.origin}
+    audience={config.audience}
+    scope={"read:current_user update:current_user_metadata"}
+  >
+    <App />
+  </Auth0Provider>
 ```
+ - Within all components now you will have access to the following variables and functions
+ - This is not a comprehensive list of all features provided by Auth0 but rather the list of ones that are most likely to be used
 
-## Deployment
+###### Auth0 Variables & Functions
+| Auth0                  | Type               | Additional Information                                      |
+| ---------------------  | ------------------ | ----------------------------------------------------------- |
+| isAuthenticated        | boolean            | is the user signed in                                       |
+| user                   | json               | contains all the info about the signed in user              |
+| loading                | boolean            | is Auth0 loading, do not attempt to render anything if true |
+| loginWithRedirect      | function           | ACM Development recommends this signin method               |
+| getAccessTokenSilently | function           | get access token to validate against ACM api                |
+| logout                 | function           | logout the current user                                     |
 
-### Compiles and minifies for production
+### Resources
 
-```bash
-npm run build
-```
+ - The offical documentation for [Auth0](https://auth0.com/docs/)
+ - Quickstart for Auth0 for [React](https://auth0.com/docs/quickstart/spa/react)
+ - [Sample Application](https://github.com/auth0-samples/auth0-react-samples/tree/master/Sample-01} for Auth0
 
-### Docker build
+### Questions
 
-To build and run the Docker image, run `exec.sh`, or `exec.ps1` on Windows.
+Sometimes you may have additional questions. If the answer was not found in this readme please feel free to reach out to the [Director of Development](mailto:comet.acm@gmail.com) for _ACM_
 
-### Run your tests
+We request that you be as detailed as possible in your questions, doubts, or concerns to ensure that we can be of maximum assistance. Thank you!
 
-```bash
-npm run test
-```
-
-## Frequently Asked Questions
-
-We are compiling a list of questions and answers regarding the new JavaScript SDK - if you're having issues running the sample applications, [check the FAQ](https://github.com/auth0/auth0-spa-js/blob/master/FAQ.md)!
-
-# What is Auth0?
-
-Auth0 helps you to:
-
-- Add authentication with [multiple authentication sources](https://docs.auth0.com/identityproviders), either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce, among others**, or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS or any SAML Identity Provider**.
-- Add authentication through more traditional **[username/password databases](https://docs.auth0.com/mysql-connection-tutorial)**.
-- Add support for **[linking different user accounts](https://docs.auth0.com/link-accounts)** with the same user.
-- Support for generating signed [Json Web Tokens](https://docs.auth0.com/jwt) to call your APIs and **flow the user identity** securely.
-- Analytics of how, when and where users are logging in.
-- Pull data from other sources and add it to the user profile, through [JavaScript rules](https://docs.auth0.com/rules).
-
-## Create a Free Auth0 Account
-
-1. Go to [Auth0](https://auth0.com/signup) and click Sign Up.
-2. Use Google, GitHub or Microsoft Account to login.
-
-## Issue Reporting
-
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
-
-## Author
-
-[Auth0](https://auth0.com)
-
-## License
-
-This project is licensed under the MIT license. See the [LICENSE](../LICENSE) file for more info.
+![ACM Development](https://www.acmutd.co/brand/Development/Banners/light_dark_background.png)

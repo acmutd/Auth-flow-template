@@ -38,7 +38,7 @@ The `auth0-react` library supports many functions for use in your application. W
 
 #### Class Components
  - `import { withAuth0 } from "@auth0/auth0-react";`
- - Update the export for your component to be `export default withAuth0(User);`
+ - Update the export for your component to be `export default withAuth0(NameOfComponent);`
  - You can access Auth0 context this way within the class component `const { getAccessTokenSilently, user } = this.props.auth0;`
  - Auth0 wraps class components with a higher order component and injects the necessary functions and variables as props
 

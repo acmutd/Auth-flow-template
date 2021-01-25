@@ -28,7 +28,7 @@ const App = () => {
         <Container className="flex-grow-1 mt-5">
           <Switch>
             <Route path="/" exact component={Home} />
-            <PrivateRoute path="/profile" component={Profile} />
+            <PrivateRoute path="/profile" render={(props) => <Profile {...props}/>}/>
             <PrivateRoute path="/external-api" component={ExternalApi} />
           </Switch>
         </Container>

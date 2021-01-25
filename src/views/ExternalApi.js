@@ -19,14 +19,12 @@ const ExternalApi = () => {
         randomField: "hello-world"
       };
       const token = await getAccessTokenSilently();
-      const response = await fetch(`https://us-central1-acm-core.cloudfunctions.net/api/createTestDivision`, {
-        method: 'POST',
+      const response = await fetch(`https://us-central1-acm-core.cloudfunctions.net/api/`, {
         headers: {
           Authorization: `Bearer ${token}`
         },
-        body: JSON.stringify(data)
       });
-      const responseData = await response.json();
+      const responseData = await response.text();
       console.log(responseData);
 
       setShowResult(true);
